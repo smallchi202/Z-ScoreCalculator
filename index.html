@@ -1,0 +1,189 @@
++<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Z-Score Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center">Z-Score Calculator</h2>
+
+    <div class="row mt-4">
+        <div class="col-md-4 offset-md-4">
+            <div class="form-group">
+                <label for="weight">Weight (in KG):</label>
+                <input type="number" class="form-control" id="weight" placeholder="Enter weight">
+            </div>
+            <div class="form-group">
+                <label for="height">Height (in CM):</label>
+                <input type="number" class="form-control" id="height" placeholder="Enter height">
+            </div>
+            <!-- Add three inputs for coronary arteries -->
+            <div class="form-group">
+                <label for="left-coronary-artery">LMCA:</label>
+                <input type="number" class="form-control" id="left-coronary-artery" placeholder="Enter left coronary artery">
+            </div>
+            <div class="form-group">
+                <label for="left-anterior-descending">LAD:</label>
+                <input type="number" class="form-control" id="left-anterior-descending" placeholder="Enter left anterior descending">
+            </div>
+            <div class="form-group">
+                <label for="proximal-right-coronary-artery">Proximal RCA:</label>
+                <input type="number" class="form-control" id="proximal-right-coronary-artery" placeholder="Enter proximal right coronary artery">
+            </div>
+            <button class="btn btn-primary" onclick="calculateBMI()">Calculate</button>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-10 offset-md-1">
+            <!-- Table for results -->
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>original</th>
+                        <th>Lin</th>
+                        <th>Dallaire</th>
+                        <th>McCrindle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>BMI</td>
+                        <td id="bmiResult1">-</td>
+                        <td id="bmiResult3">-</td>
+                        <td id="bmiResult2">-</td>
+                        <td id="bmiResult4">-</td>
+                    </tr>
+                    <tr>
+                        <td>BSA</td>
+                        <td id="bsaResult1">-</td>
+                        <td id="bsaResult3">-</td>
+                        <td id="bsaResult2">-</td>
+                        <td id="bsaResult4">-</td>
+                    </tr>
+                    <tr>
+                        <td>LCA Z-Score</td>
+                        <td id="lcaResult1">-</td>
+                        <td id="lcaResult3">-</td>
+                        <td id="lcaResult2">-</td>
+                        <td id="lcaResult4">-</td>
+                    </tr>
+                    <tr>
+                        <td>LAD Z-Score</td>
+                        <td id="ladResult1">-</td>
+                        <td id="ladResult3">-</td>
+                        <td id="ladResult2">-</td>
+                        <td id="ladResult4">-</td>
+                    </tr>
+                    <tr>
+                        <td>RCA Z-Score</td>
+                        <td id="rcaResult1">-</td>
+                        <td id="rcaResult3">-</td>
+                        <td id="rcaResult2">-</td>
+                        <td id="rcaResult4">-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS & jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    function calculateBMI() {
+        const weight = parseFloat(document.getElementById('weight').value);
+        const heightcm = parseFloat(document.getElementById('height').value);
+        const heightm = parseFloat(heightcm / 100); // Convert to meters
+
+        if(isNaN(weight) || isNaN(heightm)) {
+            alert('Please enter valid values.');
+            return;
+        }
+
+        // Get values of coronary arteries
+        const leftCoronaryArtery = parseFloat(document.getElementById('left-coronary-artery').value);        
+        const leftAnteriorDescending = parseFloat(document.getElementById('left-anterior-descending').value);
+        const proximalRightCoronaryArtery = parseFloat(document.getElementById('proximal-right-coronary-artery').value);
+        
+        if (isNaN(leftCoronaryArtery) || isNaN(proximalRightCoronaryArtery) || isNaN(leftAnteriorDescending)) {
+            alert('Please enter valid values for coronary arteries.');
+            return;
+        }
+
+        // Perform BMI calculation
+        const bmi = weight / (heightm * heightm);
+        let resultText_bmi = `${bmi.toFixed(2)} (`;
+
+        if (bmi < 18.5) resultText_bmi += "Underweight)";
+        else if (bmi < 24.9) resultText_bmi += "Normal weight)";
+        else resultText_bmi += "Overweight)";
+
+        document.getElementById('bmiResult1').textContent = resultText_bmi;
+        document.getElementById('bmiResult2').textContent = resultText_bmi; // Placeholder, update when adding new formulas
+        document.getElementById('bmiResult3').textContent = resultText_bmi; // Placeholder, update when adding new formulas
+        document.getElementById('bmiResult4').textContent = resultText_bmi; // Placeholder, update when adding new formulas
+
+        // Perform BSA and Z-Score calculations
+        const BSA = 0.007184*(heightcm**0.725)*(weight**0.425);
+        const LCA = leftCoronaryArtery;
+        const LAD = leftAnteriorDescending;
+        const RCA = proximalRightCoronaryArtery;
+        const LCA_Z = (LCA**1.03-0.258-1.466*Math.log(BSA))/0.336;
+        const LAD_Z = (LAD**0.465-0.292-0.613*Math.log(BSA))/0.203;
+        const RCA_Z = (RCA**0.424+0.109-0.129*LCA-0.146*LAD-0.418*BSA)/0.171;
+
+        const LinLCA_Z = Math.log(LCA)+1.4381-(0.4182*Math.log(BSA))/(0.0341**0.5);
+        const LinLAD_Z = Math.log(LAD)+1.7163-(0.4093*Math.log(BSA))/(0.0948**0.5);
+        const LinRCA_Z = Math.log(RCA)+1.6603-(0.3768*Math.log(BSA))/(0.0533**0.5);
+
+        const DallaireLCA_Z = (LCA-(2.9238*(BSA**0.5))-0.1817)/(0.1801+0.253*(BSA**0.5));
+        const DallaireLAD_Z = (LAD-(2.2672*(BSA**0.5))-0.1502)/(0.1709+0.2293*(BSA**0.5));
+        const DallaireRCA_Z = (RCA-(2.7521*(BSA**0.5))-0.3039)/(0.1626+0.2881*(BSA**0.5));
+
+        const MCLCA_Z = (LCA/10+0.0289-(0.3175*BSA**0.3601))/(0.0304+(0.0151*BSA));
+        const MCLAD_Z = (LAD/10+0.0285-(0.2611*BSA**0.3789))/(0.0147+(0.0200*BSA));
+        const MCRCA_Z = (RCA/10+0.0276-(0.2612*BSA**0.3999))/(0.0241+(0.0160*BSA));
+
+        document.getElementById('bsaResult1').textContent = BSA.toFixed(4);
+        document.getElementById('bsaResult2').textContent = BSA.toFixed(4); // Placeholder, update when adding new formulas
+        document.getElementById('bsaResult3').textContent = BSA.toFixed(4); // Placeholder, update when adding new formulas
+        document.getElementById('bsaResult4').textContent = BSA.toFixed(4); // Placeholder, update when adding new formulas
+
+        document.getElementById('lcaResult1').textContent = LCA_Z.toFixed(4);
+        document.getElementById('lcaResult2').textContent = DallaireLCA_Z.toFixed(4); // Placeholder, update when adding new formulas
+        document.getElementById('lcaResult3').textContent = LinLCA_Z.toFixed(4); // Placeholder, update when adding new formulas
+        document.getElementById('lcaResult4').textContent = MCLCA_Z.toFixed(4); // Placeholder, update when adding new formulas
+
+        document.getElementById('ladResult1').textContent = LAD_Z.toFixed(4);
+        document.getElementById('ladResult2').textContent = DallaireLAD_Z.toFixed(4); // Placeholder, update when adding new formulas
+        document.getElementById('ladResult3').textContent = LinLAD_Z.toFixed(4); // Placeholder, update when adding new formulas
+        document.getElementById('ladResult4').textContent = MCLAD_Z.toFixed(4); // Placeholder, update when adding new formulas
+
+        document.getElementById('rcaResult1').textContent = RCA_Z.toFixed(4);
+        document.getElementById('rcaResult2').textContent = DallaireRCA_Z.toFixed(4); // Placeholder, update when adding new formulas
+        document.getElementById('rcaResult3').textContent = LinRCA_Z.toFixed(4); // Placeholder, update when adding new formulas
+        document.getElementById('rcaResult4').textContent = MCRCA_Z.toFixed(4); // Placeholder, update when adding new formulas
+    }
+</script>
+
+<div class="WordSection1" style='layout-grid:18.0pt'>
+    <p class="MsoNormal" align=center style='text-align:center'>
+        <span style='font-size:11.0pt;line-height:115%;font-family:"新細明體",serif'>本網頁公式由高雄長庚蒐集</span>
+        <span lang=EN-US style='font-size:11.0pt;line-height:115%'>900</span>
+        <span style='font-size:11.0pt;line-height:115%;font-family:"新細明體",serif'>多位</span>
+        <span lang=EN-US style='font-size:11.0pt;line-height:115%'>10</span>
+        <span style='font-size:11.0pt;line-height:115%;font-family:"新細明體",serif'>歲以下無心臟疾病兒童的冠狀動脈內徑數值建構，作為心臟冠狀動脈相關症狀診斷參考。</span>
+    </p>
+</div>
+
+</body>
+</html>
