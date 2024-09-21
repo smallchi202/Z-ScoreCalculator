@@ -13,29 +13,37 @@
     <h2 class="text-center">Z-Score Calculator</h2>
 
     <div class="row mt-4">
-        <div class="col-md-4 offset-md-4">
-            <div class="form-group">
-                <label for="weight">Weight (in KG):</label>
-                <input type="number" class="form-control" id="weight" placeholder="Enter weight">
+        <div class="col-md-8 offset-md-2">
+            <div class="row">
+                <!-- Left Column -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="weight">Weight (in KG):</label>
+                        <input type="number" class="form-control" id="weight" placeholder="Enter weight">
+                    </div>
+                    <div class="form-group">
+                        <label for="height">Height (in CM):</label>
+                        <input type="number" class="form-control" id="height" placeholder="Enter height">
+                    </div>
+                    <div class="form-group">
+                        <label for="proximal-right-coronary-artery">Proximal RCA:</label>
+                        <input type="number" class="form-control" id="proximal-right-coronary-artery" placeholder="Enter proximal right coronary artery">
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="left-coronary-artery">LMCA:</label>
+                        <input type="number" class="form-control" id="left-coronary-artery" placeholder="Enter left coronary artery">
+                    </div>
+                    <div class="form-group">
+                        <label for="left-anterior-descending">LAD:</label>
+                        <input type="number" class="form-control" id="left-anterior-descending" placeholder="Enter left anterior descending">
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="height">Height (in CM):</label>
-                <input type="number" class="form-control" id="height" placeholder="Enter height">
-            </div>
-            <!-- Add three inputs for coronary arteries -->
-            <div class="form-group">
-                <label for="left-coronary-artery">LMCA:</label>
-                <input type="number" class="form-control" id="left-coronary-artery" placeholder="Enter left coronary artery">
-            </div>
-            <div class="form-group">
-                <label for="left-anterior-descending">LAD:</label>
-                <input type="number" class="form-control" id="left-anterior-descending" placeholder="Enter left anterior descending">
-            </div>
-            <div class="form-group">
-                <label for="proximal-right-coronary-artery">Proximal RCA:</label>
-                <input type="number" class="form-control" id="proximal-right-coronary-artery" placeholder="Enter proximal right coronary artery">
-            </div>
-            <button class="btn btn-primary" onclick="calculateBMI()">Calculate</button>
+            <button class="btn btn-primary btn-block mt-3" onclick="calculateBMI()">Calculate</button>
         </div>
     </div>
 
@@ -46,14 +54,14 @@
                 <thead>
                     <tr>
                         <th>Parameter</th>
-                        <th>original</th>
+                        <th>Original</th>
                         <th>Lin</th>
                         <th>Dallaire</th>
                         <th>McCrindle</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+<!--                     <tr>
                         <td>BMI</td>
                         <td id="bmiResult1">-</td>
                         <td id="bmiResult3">-</td>
@@ -66,7 +74,7 @@
                         <td id="bsaResult3">-</td>
                         <td id="bsaResult2">-</td>
                         <td id="bsaResult4">-</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <td>LCA Z-Score</td>
                         <td id="lcaResult1">-</td>
@@ -177,11 +185,7 @@
 
 <div class="WordSection1" style='layout-grid:18.0pt'>
     <p class="MsoNormal" align=center style='text-align:center'>
-        <span style='font-size:11.0pt;line-height:115%;font-family:"新細明體",serif'>本網頁公式由高雄長庚蒐集</span>
-        <span lang=EN-US style='font-size:11.0pt;line-height:115%'>900</span>
-        <span style='font-size:11.0pt;line-height:115%;font-family:"新細明體",serif'>多位</span>
-        <span lang=EN-US style='font-size:11.0pt;line-height:115%'>10</span>
-        <span style='font-size:11.0pt;line-height:115%;font-family:"新細明體",serif'>歲以下無心臟疾病兒童的冠狀動脈內徑數值建構，作為心臟冠狀動脈相關症狀診斷參考。</span>
+        <span style='font-size:11.0pt;line-height:115%;font-family:"新細明體",serif'>The model was buildt based on the Kaohsiung Chang Gang Hospital from more than 900 children under 10 years old.</span>
     </p>
 </div>
 
