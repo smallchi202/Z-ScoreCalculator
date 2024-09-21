@@ -22,8 +22,8 @@
                         <input type="number" class="form-control" id="weight" placeholder="Enter weight">
                     </div>
                     <div class="form-group">
-                        <label for="height">Height (in CM):</label>
-                        <input type="number" class="form-control" id="height" placeholder="Enter height">
+                        <label for="left-coronary-artery">LMCA:</label>
+                        <input type="number" class="form-control" id="left-coronary-artery" placeholder="Enter left coronary artery">
                     </div>
                     <div class="form-group">
                         <label for="proximal-right-coronary-artery">Proximal RCA:</label>
@@ -34,9 +34,10 @@
                 <!-- Right Column -->
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="left-coronary-artery">LMCA:</label>
-                        <input type="number" class="form-control" id="left-coronary-artery" placeholder="Enter left coronary artery">
-                    </div>
+                        <label for="height">Height (in CM):</label>
+                        <input type="number" class="form-control" id="height" placeholder="Enter height">
+                    </div>                    
+
                     <div class="form-group">
                         <label for="left-anterior-descending">LAD:</label>
                         <input type="number" class="form-control" id="left-anterior-descending" placeholder="Enter left anterior descending">
@@ -135,10 +136,10 @@
         else if (bmi < 24.9) resultText_bmi += "Normal weight)";
         else resultText_bmi += "Overweight)";
 
-        document.getElementById('bmiResult1').textContent = resultText_bmi;
-        document.getElementById('bmiResult2').textContent = resultText_bmi; // Placeholder, update when adding new formulas
-        document.getElementById('bmiResult3').textContent = resultText_bmi; // Placeholder, update when adding new formulas
-        document.getElementById('bmiResult4').textContent = resultText_bmi; // Placeholder, update when adding new formulas
+        // document.getElementById('bmiResult1').textContent = resultText_bmi;
+        // document.getElementById('bmiResult2').textContent = resultText_bmi; // Placeholder, update when adding new formulas
+        // document.getElementById('bmiResult3').textContent = resultText_bmi; // Placeholder, update when adding new formulas
+        // document.getElementById('bmiResult4').textContent = resultText_bmi; // Placeholder, update when adding new formulas
 
         // Perform BSA and Z-Score calculations
         const BSA = 0.007184*(heightcm**0.725)*(weight**0.425);
@@ -161,10 +162,10 @@
         const MCLAD_Z = (LAD/10+0.0285-(0.2611*BSA**0.3789))/(0.0147+(0.0200*BSA));
         const MCRCA_Z = (RCA/10+0.0276-(0.2612*BSA**0.3999))/(0.0241+(0.0160*BSA));
 
-        document.getElementById('bsaResult1').textContent = BSA.toFixed(4);
-        document.getElementById('bsaResult2').textContent = BSA.toFixed(4); // Placeholder, update when adding new formulas
-        document.getElementById('bsaResult3').textContent = BSA.toFixed(4); // Placeholder, update when adding new formulas
-        document.getElementById('bsaResult4').textContent = BSA.toFixed(4); // Placeholder, update when adding new formulas
+        // document.getElementById('bsaResult1').textContent = BSA.toFixed(4);
+        // document.getElementById('bsaResult2').textContent = BSA.toFixed(4); // Placeholder, update when adding new formulas
+        // document.getElementById('bsaResult3').textContent = BSA.toFixed(4); // Placeholder, update when adding new formulas
+        // document.getElementById('bsaResult4').textContent = BSA.toFixed(4); // Placeholder, update when adding new formulas
 
         document.getElementById('lcaResult1').textContent = LCA_Z.toFixed(4);
         document.getElementById('lcaResult2').textContent = DallaireLCA_Z.toFixed(4); // Placeholder, update when adding new formulas
