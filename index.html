@@ -150,17 +150,17 @@
         const LAD_Z = (LAD**0.465-0.292-0.613*Math.log(BSA))/0.203;
         const RCA_Z = (RCA**0.424+0.109-0.129*LCA-0.146*LAD-0.418*BSA)/0.171;
 
-        const LinLCA_Z = Math.log(LCA)+1.4381-(0.4182*Math.log(BSA))/(0.0341**0.5);
-        const LinLAD_Z = Math.log(LAD)+1.7163-(0.4093*Math.log(BSA))/(0.0948**0.5);
-        const LinRCA_Z = Math.log(RCA)+1.6603-(0.3768*Math.log(BSA))/(0.0533**0.5);
+        const LinLCA_Z = (Math.log(LCA)+1.6603-(0.3768*Math.log(BSA)))/(0.0533**(1/2));
+        const LinLAD_Z = (Math.log(LCA)+1.4381-(0.4182*Math.log(BSA)))/(0.0341**(1/2));
+        const LinRCA_Z = (Math.log(LCA)+1.7163-(0.4093*Math.log(BSA)))/(0.0948**(1/2));
 
         const DallaireLCA_Z = (LCA-(2.9238*(BSA**0.5))-0.1817)/(0.1801+0.253*(BSA**0.5));
         const DallaireLAD_Z = (LAD-(2.2672*(BSA**0.5))-0.1502)/(0.1709+0.2293*(BSA**0.5));
         const DallaireRCA_Z = (RCA-(2.7521*(BSA**0.5))-0.3039)/(0.1626+0.2881*(BSA**0.5));
 
-        const MCLCA_Z = (LCA/10+0.0289-(0.3175*BSA**0.3601))/(0.0304+(0.0151*BSA));
-        const MCLAD_Z = (LAD/10+0.0285-(0.2611*BSA**0.3789))/(0.0147+(0.0200*BSA));
-        const MCRCA_Z = (RCA/10+0.0276-(0.2612*BSA**0.3999))/(0.0241+(0.0160*BSA));
+        const MCLCA_Z = (LCA+0.0289-(0.3175*BSA**0.3601))/(0.0151*BSA);
+        const MCLAD_Z = (LAD+0.0285-(0.2611*BSA**0.3789))/(0.0200*BSA);
+        const MCRCA_Z = (RCA+0.0276-(0.2612*BSA**0.3999))/(0.0160*BSA);
 
         // document.getElementById('bsaResult1').textContent = BSA.toFixed(4);
         // document.getElementById('bsaResult2').textContent = BSA.toFixed(4); // Placeholder, update when adding new formulas
