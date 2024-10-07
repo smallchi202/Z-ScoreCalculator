@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Z-Score Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center">Z-Score Calculator</h2>
+
+    <div class="row mt-4">
+        <div class="col-md-4 offset-md-4">
+            <div class="form-group">
+                <label for="weight">Weight (in KG):</label>
+                <input type="number" class="form-control" id="weight" placeholder="Enter weight">
+            </div>
+            <div class="form-group">
+                <label for="height">Height (in CM):</label>
+                <input type="number" class="form-control" id="height" placeholder="Enter height">
+            </div>
+            <!-- Add three inputs for coronary arteries -->
+            <div class="form-group">
+                <label for="left-coronary-artery">LCA:</label>
+                <input type="number" class="form-control" id="left-coronary-artery" placeholder="Enter left coronary artery">
+            </div>
+            <div class="form-group">
+                <label for="left-anterior-descending">LAD:</label>
+                <input type="number" class="form-control" id="left-anterior-descending" placeholder="Enter left anterior descending">
+            </div>
+            <div class="form-group">
+                <label for="proximal-right-coronary-artery">RCA:</label>
+                <input type="number" class="form-control" id="proximal-right-coronary-artery" placeholder="Enter right coronary artery">
+            </div>
+            <button class="btn btn-primary" onclick="calculateBMI()">Calculate</button>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-10 offset-md-1">
+            <!-- Table for Z-Scores -->
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Original</th>
+                        <th>Lin</th>
+                        <th>Dallaire</th>
+                        <th>McCrindle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>LCA Z-Score</td>
+                        <td id="lcaResult1">-</td>
+                        <td id="lcaResult3">-</td>
+                        <td id="lcaResult2">-</td>
+                        <td id="lcaResult4">-</td>
+                    </tr>
+                    <tr>
+                        <td>LAD Z-Score</td>
+                        <td id="ladResult1">-</td>
+                        <td id="ladResult3">-</td>
+                        <td id="ladResult2">-</td>
+                        <td id="ladResult4">-</td>
+                    </tr>
+                    <tr>
+                        <td>RCA Z-Score</td>
+                        <td id="rcaResult1">-</td>
+                        <td id="rcaResult3">-</td>
+                        <td id="rcaResult2">-</td>
+                        <td id="rcaResult4">-</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Display BMI and BSA results as text -->
+            <div class="mt-4">
+                <p><strong>BMI: </strong> <span id="bmiResult"> - </span> <strong>BSA: </strong> <span id="bsaResult"> - </span></p>
+            </div>
+
+            <!-- Add explanatory text here -->
+            <div class="mt-4">
+                <p>
+                    下表為本Z-Score與其他文獻的常態分配性比較結果，本Z-Score公式在資料集有最好的常態分配性 (A-D Test > 0.5)。
+                    <br>
+                    The Z-score formula ensures the best normality distribution within the dataset.
+                </p>
+            </div>
+
+            <!-- 22列×5直欄的表格 -->
+            <table class="table table-bordered">  
+                <style>
+                    /* 縮小表格字型 */
+                    .table-sm {
+                        font-size: 0.4rem;
+                    }
+                    /* 縮小表格列高 */
+                    .table-sm th, .table-sm td {
+                        padding: 0.3rem; /* 調整內距以縮小列高 */
+                        line-height: 0.6;  /* 調整行高 */
+                    }
+                </style>
+                <thead>
+                    <tr style="border-bottom: 1px solid black;">
+                        <th>Age Group</th>
+                        <th>Method</th>
+                        <th colspan="3">Anderson-Darling Test (p-value)</th>
+                    </tr>
+                </thead>
+            <tbody>
+            <!-- 從第二行到第二十二行 -->
+            <!-- 總共21行，這裡只展示兩行，請根據需要自行擴展 -->
+                <tr style="border-bottom: 1.5px solid black;">
+                    <td></td>
+                    <td></td>
+                    <td>LCA</td>
+                    <td>LAD</td>
+                    <td>RCA</td>
+                </tr>
+                <tr>
+                    <td>0-6y</td>
+                    <td>Lin et al. </td>
+                    <td>0.253</td>
+                    <td>0.217</td>
+                    <td style="color: red;">0.011</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Dallaire et al. </td>
+                    <td style="color: red;">0.047</td>
+                    <td style="color: red;">0.000</td>
+                    <td style="color: red;">0.000</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>McCrindle et al. </td>
+                    <td>0.253</td>
+                    <td>0.217</td>
+                    <td style="color: red;">0.011</td>
+                </tr>     
+                <tr style="border-bottom: 1.5px solid black;">
+                    <td></td>
+                    <td>Kuo et al. </td>
+                    <td>0.792</td>
+                    <td>0.215</td>
+                    <td>0.600</td>
+                </tr> 
+                <tr>
+                    <td>6-7y</td>
+                    <td>Lin et al. </td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Dallaire et al. </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>McCrindle et al. </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>     
+                <tr style="border-bottom: 1px solid black;">
+                    <td></td>
+                    <td>Kuo et al. </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>                  
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS & jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    function calculateBMI() {
+        const weight = parseFloat(document.getElementById('weight').value);
+        const heightcm = parseFloat(document.getElementById('height').value);
+        const heightm = parseFloat(heightcm / 100); // Convert to meters
+
+        if(isNaN(weight) || isNaN(heightm)) {
+            alert('Please enter valid values.');
+            return;
+        }
+
+        // Get values of coronary arteries
+        const leftCoronaryArtery = parseFloat(document.getElementById('left-coronary-artery').value);        
+        const leftAnteriorDescending = parseFloat(document.getElementById('left-anterior-descending').value);
+        const proximalRightCoronaryArtery = parseFloat(document.getElementById('proximal-right-coronary-artery').value);
+        
+        if (isNaN(leftCoronaryArtery) || isNaN(proximalRightCoronaryArtery) || isNaN(leftAnteriorDescending)) {
+            alert('Please enter valid values for coronary arteries.');
+            return;
+        }
+
+        // Perform BMI calculation
+        const bmi = weight / (heightm * heightm);
+        let resultText_bmi = `${bmi.toFixed(2)} (`;
+
+        if (bmi < 18.5) resultText_bmi += "Underweight)";
+        else if (bmi < 24.9) resultText_bmi += "Normal weight)";
+        else resultText_bmi += "Overweight)";
+
+        document.getElementById('bmiResult').textContent = resultText_bmi;
+
+        // Perform BSA and Z-Score calculations
+        const BSA = 0.024265*(heightcm**0.3964)*(weight**0.5378);
+        const LCA = leftCoronaryArtery;
+        const LAD = leftAnteriorDescending;
+        const RCA = proximalRightCoronaryArtery;
+        const LCA_Z = (((LCA**0.9899 - 1) / 0.9899) - 1.4410 - (0.9222 * Math.log(BSA))) / (0.1523**0.5);
+        const LAD_Z = (LAD**0.465-0.292-0.613*Math.log(BSA))/0.203;
+        const RCA_Z = (RCA**0.424+0.109-0.129*LCA-0.146*LAD-0.418*BSA)/0.171;
+
+        const LinLCA_Z = Math.log(LCA/10)+1.4381-(0.4182*Math.log(BSA))/(0.0341**0.5);
+        const LinLAD_Z = Math.log(LAD/10)+1.7163-(0.4093*Math.log(BSA))/(0.0948**0.5);
+        const LinRCA_Z = Math.log(RCA/10)+1.6603-(0.3768*Math.log(BSA))/(0.0533**0.5);
+
+        const DallaireLCA_Z = (LCA-2.9238*(BSA**0.5)+0.1817)/(0.1801+0.253*(BSA**0.5));
+        const DallaireLAD_Z = (LAD-(2.2672*(BSA**0.5))+0.1502)/(0.1709+0.2293*(BSA**0.5));
+        const DallaireRCA_Z = (RCA-2.7521*(BSA**0.5)+0.3039)/(0.1626+0.2881*(BSA**0.5));
+
+        const MCLCA_Z = (LCA/10+0.0289-(0.3175*(BSA**0.3601)))/(0.0304+(0.0151*BSA));
+        const MCLAD_Z = (LAD/10+0.0285-(0.2611*(BSA**0.3789)))/(0.0147+(0.0200*BSA));
+        const MCRCA_Z = (RCA/10+0.0276-(0.2612*(BSA**0.3999)))/(0.0241+(0.0160*BSA));
+
+        document.getElementById('bsaResult').textContent = BSA.toFixed(4);
+
+        document.getElementById('lcaResult1').textContent = LCA_Z.toFixed(4);
+        document.getElementById('lcaResult2').textContent = DallaireLCA_Z.toFixed(4);
+        document.getElementById('lcaResult3').textContent = LinLCA_Z.toFixed(4);
+        document.getElementById('lcaResult4').textContent = MCLCA_Z.toFixed(4);
+
+        document.getElementById('ladResult1').textContent = LAD_Z.toFixed(4);
+        document.getElementById('ladResult2').textContent = DallaireLAD_Z.toFixed(4);
+        document.getElementById('ladResult3').textContent = LinLAD_Z.toFixed(4);
+        document.getElementById('ladResult4').textContent = MCLAD_Z.toFixed(4);
+
+        document.getElementById('rcaResult1').textContent = RCA_Z.toFixed(4);
+        document.getElementById('rcaResult2').textContent = DallaireRCA_Z.toFixed(4);
+        document.getElementById('rcaResult3').textContent = LinRCA_Z.toFixed(4);
+        document.getElementById('rcaResult4').textContent = MCRCA_Z.toFixed(4);
+    }
+</script>
+
+</body>
+</html>
